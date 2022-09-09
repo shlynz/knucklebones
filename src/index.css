@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+  font-family: "Quicksand";
+}
+
+.board {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: min-content;
+  padding: 25px;
+}
+
+.field {
+  border: 1px solid black;
+  text-align: center;
+  width: 50px;
+  line-height: 50px;
+}
