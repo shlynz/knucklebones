@@ -1,10 +1,15 @@
+import { useState } from 'react';
+import Dice from './Dice';
+
 const Board = ({board, setBoard, remote = false}) => {
+    
+    const [diceResult, setDiceResult] = useState(6);
 
     const handleClick = (fieldId) => {
         if(remote) return;
         console.log(fieldId);
         const newBoard = [...board];
-        newBoard[fieldId] = 1;
+        newBoard[fieldId] = diceResult;
         console.log(newBoard);
         setBoard(newBoard);
     }
@@ -22,6 +27,7 @@ const Board = ({board, setBoard, remote = false}) => {
                     </div>
                 )
             }
+            {!remote && <Dice diceResult={diceResult} setDiceResult={setDiceResult} />}
         </div>
     )
 }
