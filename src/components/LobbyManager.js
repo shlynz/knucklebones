@@ -1,7 +1,7 @@
 import { Peer } from 'peerjs';
 import { useState } from 'react';
 
-const LobbyManager = ({setConnection}) => {
+const LobbyManager = ({setConnection, setIsTurn}) => {
 
     let [peerId, setPeerId] = useState('');
     let [connectionId, setConnectionId] = useState('');
@@ -14,8 +14,9 @@ const LobbyManager = ({setConnection}) => {
             console.log('My peer ID is: ' + id);
             setPeerId(id);
             peer.on('connection', (conn) => {
-                console.log('connection received')
+                console.log('connection received');
                 setConnection(conn);
+                setIsTurn(true);
             });
         });
     }
@@ -27,7 +28,7 @@ const LobbyManager = ({setConnection}) => {
             console.log('connecting to ' + connectionId);
             let conn = peer.connect(connectionId);
             conn.on('open', () => {
-                console.log('connection opened...')
+                console.log('connection opened...');
                 setConnection(conn);
             });
         });

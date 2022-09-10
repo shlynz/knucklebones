@@ -1,13 +1,9 @@
-import { useState } from 'react';
-import Dice from './Dice';
-
-const Board = ({board, setBoard, remote = false}) => {
+const Board = ({board, setBoard, isTurn, diceResult, remote = false}) => {
     
-    const [diceResult, setDiceResult] = useState(6);
 
     const handleClick = (fieldId) => {
-        if(remote) return;
-        console.log(fieldId);
+        if(remote || !isTurn) return;
+        if(board[fieldId]) return;
         const newBoard = [...board];
         newBoard[fieldId] = diceResult;
         console.log(newBoard);
@@ -18,16 +14,15 @@ const Board = ({board, setBoard, remote = false}) => {
         <div className='board'>
             {
                 board.map((field, index) => 
-                    <div 
+                    <a 
                         className='field'
                         key={remote ? `remoteField${index}` : `field${index}`}
                         onClick={() => handleClick(index)}
                     >
                         {field}
-                    </div>
+                    </a>
                 )
             }
-            {!remote && <Dice diceResult={diceResult} setDiceResult={setDiceResult} />}
         </div>
     )
 }
