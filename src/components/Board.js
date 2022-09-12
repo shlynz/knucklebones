@@ -1,6 +1,6 @@
 import Dice from './Dice';
 
-const Board = ({board, setNextMove, isTurn, diceResult, remote = false}) => {
+const Board = ({board, score, setNextMove, isTurn, diceResult, remote = false}) => {
     
     // if a field is getting clicked, check if its not opponents board, its your turn and the field isn't already occupied
     const handleClick = (fieldId) => {
@@ -11,6 +11,13 @@ const Board = ({board, setNextMove, isTurn, diceResult, remote = false}) => {
 
     return(
         <div className='board'>
+            {
+                score?.board.map((score, index) =>
+                    <p className='columnScore' key={index}>
+                        {score}
+                    </p>
+                )
+            }
             {
                 // map the board to a grid of die
                 board.map((field, index) => 
