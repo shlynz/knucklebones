@@ -12,7 +12,7 @@ const App = () => {
     return(
         <div className='app'>
             {!conn && <LobbyManager setConnection={setConn} setIsTurn={setIsTurn} />}
-            {conn && <Game connection={conn} isTurn={isTurn} setIsTurn={setIsTurn} setIsGameEnded={setIsGameEnded} />}
+            {conn && <Game connection={conn} isTurn={isTurn} setIsTurn={setIsTurn} isGameEnded={isGameEnded} setIsGameEnded={setIsGameEnded} />}
         </div>
     )
 }

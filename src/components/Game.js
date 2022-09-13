@@ -3,7 +3,7 @@ import Dice from './Dice';
 import GameStatus from './GameStatus';
 import { useState, useEffect } from 'react';
 
-const Game = ({connection, isTurn, setIsTurn, setIsGameEnded}) => {
+const Game = ({connection, isTurn, setIsTurn, isGameEnded, setIsGameEnded}) => {
 
     const generateBoard = () => Array(9).fill(null);
     const [myBoard, setMyBoard] = useState(generateBoard());
@@ -33,11 +33,12 @@ const Game = ({connection, isTurn, setIsTurn, setIsGameEnded}) => {
     // tallies the current score per column and total
     const updateScore = () => {
         const countScore = (board) => {
+            const scoreMultiplier = [0, 1, 4, 9];
+
             const valuesInColumns = [...Array(3)].map(v => Array(7).fill(0));
 
             board.forEach((value, index) => valuesInColumns[index % 3][value]++);
-            console.log(valuesInColumns);
-            const columns = valuesInColumns.map(column => column.reduce((prev, curr, index) => curr == 0 ? prev : prev + Math.pow(index, curr), 0));
+            const columns = valuesInColumns.map(column => column.reduce((total, amount, value) => total + (scoreMultiplier[amount] * value), 0));
 
             const total = columns.reduce((prev, curr) => prev + curr);
 
@@ -48,13 +49,18 @@ const Game = ({connection, isTurn, setIsTurn, setIsGameEnded}) => {
         setRemoteScore(countScore(remoteBoard));
     }
 
+    const hasGameEnded = (board1, board2) => {
+        const checkIfBoardFull = (board) => board?.filter(value => value === null)?.length === 0;
+        return checkIfBoardFull(board1) || checkIfBoardFull(board2);
+    }
+
     // if data is received, update the boards and start local turn
     connection.on('data', data => {
         setMyBoard(data.otherBoard);
         setRemoteBoard(data.movedBoard);
         setIsGameEnded(data.gameEnded);
-        rollDice(6);
-        setIsTurn(true);
+        rollDice(data.gameEnded ? null : 6);
+        setIsTurn(!data.gameEnded);
     });
 
     // do once on load
@@ -67,20 +73,22 @@ const Game = ({connection, isTurn, setIsTurn, setIsGameEnded}) => {
     useEffect(() => {
         if(!nextMove) return;
         const {movedBoard, otherBoard} = doMove(myBoard, setMyBoard, remoteBoard, setRemoteBoard, nextMove, setNextMove);
-        connection.send({movedBoard, otherBoard});
+        const gameEnded = hasGameEnded(movedBoard, otherBoard);
+        connection.send({movedBoard, otherBoard, gameEnded});
+        setIsGameEnded(gameEnded);
         setDiceResult(null);
         setIsTurn(false);
     }, [nextMove]);
 
-    useEffect(() => updateScore(), [isTurn]);
+    useEffect(() => updateScore(), [isTurn, isGameEnded]);
 
     return(
         <div className='game'>
             This is where the game is played
             <Board board={remoteBoard} score={remoteScore} remote={true} />
             <Board board={myBoard} score={localScore} setNextMove={setNextMove} isTurn={isTurn} diceResult={diceResult} />
-            <Dice diceResult={diceResult} />
-            <GameStatus localScore={localScore} remoteScore={remoteScore}/>
+            {!isGameEnded && <Dice diceResult={diceResult} />}
+            <GameStatus isGameEnded={isGameEnded} localScore={localScore?.total} remoteScore={remoteScore?.total}/>
         </div>
     )
 }
