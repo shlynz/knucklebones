@@ -2,6 +2,7 @@ import LobbyManager from './LobbyManager';
 import Game from './Game';
 import GameStatus from './GameStatus';
 import { useState } from 'react';
+import Tutorial from './Tutorial';
 
 const App = () => {
 
@@ -13,6 +14,7 @@ const App = () => {
         <div className='app'>
             {!conn && <LobbyManager setConnection={setConn} setIsTurn={setIsTurn} />}
             {conn && <Game connection={conn} isTurn={isTurn} setIsTurn={setIsTurn} isGameEnded={isGameEnded} setIsGameEnded={setIsGameEnded} />}
+            <Tutorial />
         </div>
     )
 }
