@@ -4,11 +4,47 @@
   font-family: "Quicksand";
 }
 
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.app > div:nth-child(2) {
+  margin-top: 50px;
+}
+
+.row {
+  display: flex;
+  width: 250px;
+}
+
+.row > a {
+  margin-left: -1px;
+  width: 40%;
+  text-align: center;
+}
+
+.row > input {
+  width: 60%;
+}
+
+.row > * {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+#create-game-button {
+  width: 100%;
+}
+
 .board {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(3, auto);
   width: min-content;
   padding: 25px;
+  justify-items: stretch;
 }
 
 .field {
@@ -26,18 +62,29 @@
 .dice {
   border: 1px solid black;
   display: grid;
-  grid-template-columns: auto auto auto;
-  width: min-content;
-  height: max-content;
+  grid-template-columns: repeat(3, auto);
+  width: 40px;
+  height: 40px;
+  align-content: stretch;
 }
 
 .pip, .filler-pip {
-  margin: 0px;
-  width: 10px;
-  height: 10px;
+  margin: 1px;
 }
+
 .pip {
   border-radius: 50%;
   border: 1px solid black;
   background-color: black;
+}
+
+@media screen and (max-width: 760px) {
+  .app > div {
+    grid-column: span 3;
+    display: block;
+  }
+
+  .app > div:nth-child(2) {
+    margin: 20px 0;
+  }
 }

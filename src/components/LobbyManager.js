@@ -6,6 +6,7 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
     const idPrefix = 'shlynz-knucklebones-';
     const [peerId, setPeerId] = useState('');
     const [connectionId, setConnectionId] = useState('');
+    const [isGameCreated, setIsGameCreated] = useState(false);
 
     const getNewId = () => {
         // I know this is a bad way to 'generate IDs' but for the scope of this project it'll do
@@ -19,11 +20,12 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
 
     const createGame = () => {
         if(peerId) return;
-        setPeerId('Awaiting ID')
+        setPeerId('Awaiting ID');
+        setIsGameCreated(true);
         const peer = new Peer(getNewId());
         peer.on('open', (id) => {
             console.log('My peer ID is: ' + id);
-            setPeerId(id);
+            setPeerId(id.slice(-6));
             peer.on('connection', (conn) => {
                 console.log('connection received');
                 setConnection(conn);
@@ -47,15 +49,31 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
         });
     }
 
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(peerId);
+        // TODO give some feedback that the text has been copied
+    }
+
     return(
         <div className='lobby-manager'>
-            <p>LobbyManager</p>
-            <label htmlFor='lobby-id'>Lobby ID: </label>
-            <input id='lobby-id' onChange={event => setConnectionId(event.target.value)} value={connectionId}/><br/>
-            <label htmlFor='own-id'>Your ID: </label>
-            <input id='own-id' value={peerId.slice(-6)} readOnly /><br/>
-            <a className='button' onClick={createGame}>Create Game</a><br/>
-            <a className='button' onClick={joinGame}>Join Game</a><br/>
+            <h2>Knucklebones</h2>
+            <label htmlFor='lobby-id'>Enter your join code here:</label>
+            <div className='row'>
+                <input className='input' id='lobby-id' onChange={event => setConnectionId(event.target.value)} value={connectionId}/>
+                <a className='button' onClick={joinGame}>Join Game</a>
+            </div>
+            <label htmlFor='own-id'>Your ID:</label>
+            {isGameCreated
+                ?
+                    <div className='row'>
+                        <input className='input' id='own-id' value={peerId} readOnly />
+                        <a className='button' onClick={copyToClipboard}>Copy ID</a>
+                    </div>
+                :
+                    <div className='row' id='create-game-div'>
+                        <a className='button' id='create-game-button' onClick={createGame}>Create Game</a>
+                    </div>
+            }
         </div>
     )
 }

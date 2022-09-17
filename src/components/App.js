@@ -12,9 +12,13 @@ const App = () => {
 
     return(
         <div className='app'>
-            {!conn && <LobbyManager setConnection={setConn} setIsTurn={setIsTurn} />}
-            {conn && <Game connection={conn} isTurn={isTurn} setIsTurn={setIsTurn} isGameEnded={isGameEnded} setIsGameEnded={setIsGameEnded} />}
-            <Tutorial />
+            <div className='main-content'>
+                {!conn && <LobbyManager setConnection={setConn} setIsTurn={setIsTurn} />}
+                {conn && <Game connection={conn} isTurn={isTurn} setIsTurn={setIsTurn} isGameEnded={isGameEnded} setIsGameEnded={setIsGameEnded} />}
+            </div>
+            <div className='side-content'>
+                <Tutorial />
+            </div>
         </div>
     )
 }

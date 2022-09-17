@@ -21,13 +21,13 @@ const Board = ({board, score, setNextMove, isTurn, diceResult, remote = false}) 
             {
                 // map the board to a grid of die
                 board.map((field, index) => 
-                    <a 
+                    <span
                         className='field'
                         key={remote ? `remoteField${index}` : `field${index}`}
                         onClick={() => handleClick(index)}
                     >
                         <Dice diceResult={field}/>
-                    </a>
+                    </span>
                 )
             }
         </div>
