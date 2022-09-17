@@ -59,7 +59,7 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
             <h2>Knucklebones</h2>
             <label htmlFor='lobby-id'>Enter your join code here:</label>
             <div className='row'>
-                <input className='input' id='lobby-id' onChange={event => setConnectionId(event.target.value)} value={connectionId}/>
+                <input className='input' id='lobby-id' onChange={event => setConnectionId(event.target.value)} value={connectionId} autoComplete='off'/>
                 <a className='button' onClick={joinGame}>Join Game</a>
             </div>
             <label htmlFor='own-id'>Your ID:</label>
