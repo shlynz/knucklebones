@@ -84,7 +84,6 @@ const Game = ({connection, isTurn, setIsTurn, isGameEnded, setIsGameEnded}) => {
 
     return(
         <div className='game'>
-            This is where the game is played
             <Board board={remoteBoard} score={remoteScore} remote={true} />
             <Board board={myBoard} score={localScore} setNextMove={setNextMove} isTurn={isTurn} diceResult={diceResult} />
             {!isGameEnded && <Dice diceResult={diceResult} />}

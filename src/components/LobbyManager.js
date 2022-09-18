@@ -52,12 +52,10 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(peerId);
         document.getElementById('copy-id-button').innerText = 'Copied!';
-        // TODO give some feedback that the text has been copied
     }
 
     return(
         <div className='lobby-manager'>
-            <h2>Knucklebones</h2>
             <label htmlFor='lobby-id'>Enter your join code here:</label>
             <div className='row'>
                 <input className='input' id='lobby-id' onChange={event => setConnectionId(event.target.value)} value={connectionId} autoComplete='off'/>

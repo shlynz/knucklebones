@@ -13,6 +13,7 @@ const App = () => {
     return(
         <div className='app'>
             <div className='main-content'>
+            <h2>Knucklebones</h2>
                 {!conn && <LobbyManager setConnection={setConn} setIsTurn={setIsTurn} />}
                 {conn && <Game connection={conn} isTurn={isTurn} setIsTurn={setIsTurn} isGameEnded={isGameEnded} setIsGameEnded={setIsGameEnded} />}
             </div>
