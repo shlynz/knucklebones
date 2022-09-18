@@ -51,6 +51,7 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(peerId);
+        document.getElementById('copy-id-button').innerText = 'Copied!';
         // TODO give some feedback that the text has been copied
     }
 
@@ -67,7 +68,7 @@ const LobbyManager = ({setConnection, setIsTurn}) => {
                 ?
                     <div className='row'>
                         <input className='input' id='own-id' value={peerId} readOnly />
-                        <a className='button' onClick={copyToClipboard}>Copy ID</a>
+                        <a className='button' id='copy-id-button' onClick={copyToClipboard}>Copy ID</a>
                     </div>
                 :
                     <div className='row' id='create-game-div'>
