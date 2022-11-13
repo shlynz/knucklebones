@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/knucklebones/static/css/main.32c3dbd6.css",
+    "main.js": "/knucklebones/static/js/main.18918247.js",
+    "index.html": "/knucklebones/index.html",
+    "main.32c3dbd6.css.map": "/knucklebones/static/css/main.32c3dbd6.css.map",
+    "main.18918247.js.map": "/knucklebones/static/js/main.18918247.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.32c3dbd6.css",
+    "static/js/main.18918247.js"
+  ]
+}
